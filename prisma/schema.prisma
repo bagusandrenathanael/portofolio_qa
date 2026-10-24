@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("LOCAL_DATABASE_URL")
+}
+
+model PortfolioContent {
+  id        String   @id
+  document  Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy String   @map("updated_by")
+
+  @@map("portfolio_content")
+}
+
+model AdminSession {
+  tokenHash String @id @map("token_hash")
+  email String
+  credentialVersion String @map("credential_version")
+  expiresAt DateTime @map("expires_at")
+  @@index([expiresAt])
+  @@map("admin_session")
+}
+
+model LoginAttempt {
+  bucket String @id
+  count Int @default(0)
+  expiresAt DateTime @map("expires_at")
+  @@index([expiresAt])
+  @@map("login_attempt")
+}
+
+model AdminRecord {
+  id        String   @id @default(cuid())
+  module    String
+  title     String
+  status    String   @default("Draft")
+  priority  String   @default("Normal")
+  data      Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  relationsFrom ContentRelation[] @relation("RelationSource")
+  relationsTo   ContentRelation[] @relation("RelationTarget")
+
+  @@index([module, updatedAt])
+  @@map("admin_record")
+}
+
+model ContentRelation {
+  id        String      @id @default(cuid())
+  relation  String
+  sourceId  String      @map("source_id")
+  targetId  String      @map("target_id")
+  createdAt DateTime    @default(now()) @map("created_at")
+  source    AdminRecord @relation("RelationSource", fields: [sourceId], references: [id], onDelete: Cascade)
+  target    AdminRecord @relation("RelationTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([relation, sourceId, targetId])
+  @@index([targetId, relation])
+  @@map("content_relation")
+}

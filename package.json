@@ -18,6 +18,11 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "node scripts/deploy-turso.mjs",
     "db:import-legacy": "node scripts/import-legacy-d1.mjs",
+    "content:refresh": "node --env-file=.env scripts/refresh-showcase-content.mjs",
+    "content:refresh-case-studies": "node --env-file=.env scripts/refresh-featured-case-studies.mjs",
+    "content:refresh-notes": "node --env-file=.env scripts/refresh-qa-notes.mjs",
+    "content:ensure-jenkins-skill": "node --env-file=.env scripts/ensure-jenkins-skill.mjs",
+    "certifications:refresh-logos": "node --env-file=.env scripts/refresh-certification-logos.mjs",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
     "admin:setup": "node scripts/admin-setup.mjs"

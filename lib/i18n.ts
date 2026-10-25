@@ -56,27 +56,27 @@ const idLabels: Record<string, string> = {
 
 Object.assign(idLabels, {
   downloadCv: "Unduh CV",
-  projectFilters: "Filter kategori proyek", filterAll: "Semua", filterWeb: "Web", filterMobile: "Mobile", filterApi: "API", filterAutomation: "Otomasi", filterPerformance: "Performa", qualityChecked: "Kualitas teruji", noProjectsInCategory: "Belum ada studi kasus pada kategori ini.",
+  projectFilters: "Filter kategori proyek", filterAll: "Semua", filterWeb: "Web", filterMobile: "Mobile", filterApi: "API", filterAutomation: "Otomasi", filterPerformance: "Performa", filterDataQuality: "Kualitas Data", qualityChecked: "Kualitas teruji", noProjectsInCategory: "Belum ada studi kasus pada kategori ini.",
   qaRecordsEyebrow: "PRAKTIK QA DALAM KONTEKS", testShowcaseTitle: "Test Case Showcase", testShowcaseDescription: "Cakupan pengujian terpilih untuk menunjukkan cara kerja dan perhatian pada detail.", bugShowcaseTitle: "Bug Report Showcase", bugShowcaseDescription: "Temuan ditulis dengan konteks yang jelas agar mudah dipahami dan ditindaklanjuti.", apiShowcaseTitle: "API Testing", apiShowcaseDescription: "Validasi endpoint, kontrak respons, dan hasil pemeriksaan yang dipilih untuk publik.", automationShowcaseTitle: "Automation Testing", automationShowcaseDescription: "Framework dan suite otomasi yang dipilih untuk ditampilkan.", performanceShowcaseTitle: "Performance Testing", performanceShowcaseDescription: "Ringkasan metrik dari laporan performa yang dipublikasikan.", noPublicItems: "Belum ada item publikasi.", noPublicItemsDescription: "Pilih item QA di CMS admin dan aktifkan opsi tampil di website publik untuk menampilkannya di sini.", testIdLabel: "ID", testScenarioLabel: "Skenario pengujian", projectLabel: "Proyek", priorityLabel: "Prioritas", statusLabel: "Status", bugReportLabel: "BUG REPORT", bugEnvironmentPrivate: "Detail lingkungan tersedia sesuai permintaan.", endpointNotShared: "Endpoint tidak dipublikasikan", apiValidationPrivate: "Detail validasi tersedia sesuai permintaan.", automationFramework: "Automation framework", automationSuite: "QA automation suite", viewRepository: "Lihat repositori", performanceScenario: "Skenario performa", virtualUsersLabel: "Virtual users", responseTimeLabel: "Response time", throughputLabel: "Throughput", errorRateLabel: "Error rate",
 });
 
 Object.assign(copy.en, {
-  projectFilters: "Filter projects", filterAll: "All", filterWeb: "Web", filterMobile: "Mobile", filterApi: "API", filterAutomation: "Automation", filterPerformance: "Performance", qualityChecked: "Quality checked", noProjectsInCategory: "No case studies in this category yet.",
+  projectFilters: "Filter projects", filterAll: "All", filterWeb: "Web", filterMobile: "Mobile", filterApi: "API", filterAutomation: "Automation", filterPerformance: "Performance", filterDataQuality: "Data Quality", qualityChecked: "Quality checked", noProjectsInCategory: "No case studies in this category yet.",
   qaRecordsEyebrow: "QA PRACTICE IN CONTEXT", testShowcaseTitle: "Test Case Showcase", testShowcaseDescription: "Selected test coverage that shows how I work and where I focus on detail.", bugShowcaseTitle: "Bug Report Showcase", bugShowcaseDescription: "Findings are captured with clear context so teams can understand and act on them.", apiShowcaseTitle: "API Testing", apiShowcaseDescription: "Selected endpoint, response-contract, and validation examples.", automationShowcaseTitle: "Automation Testing", automationShowcaseDescription: "Automation frameworks and suites selected for public viewing.", performanceShowcaseTitle: "Performance Testing", performanceShowcaseDescription: "Metrics from performance reports selected for publication.", noPublicItems: "No public items yet.", noPublicItemsDescription: "Choose QA records in the admin CMS and enable the public showcase option to display them here.", testIdLabel: "ID", testScenarioLabel: "Test scenario", projectLabel: "Project", priorityLabel: "Priority", statusLabel: "Status", bugReportLabel: "BUG REPORT", bugEnvironmentPrivate: "Environment details available on request.", endpointNotShared: "Endpoint not shared", apiValidationPrivate: "Validation details available on request.", automationFramework: "Automation framework", automationSuite: "QA automation suite", viewRepository: "View repository", performanceScenario: "Performance scenario", virtualUsersLabel: "Virtual users", responseTimeLabel: "Response time", throughputLabel: "Throughput", errorRateLabel: "Error rate",
 });
 
 Object.assign(copy.ko, {
-  projectFilters: "프로젝트 필터", filterAll: "전체", filterWeb: "웹", filterMobile: "모바일", filterApi: "API", filterAutomation: "자동화", filterPerformance: "성능", qualityChecked: "품질 확인", noProjectsInCategory: "이 카테고리에는 아직 사례가 없습니다.",
+  projectFilters: "프로젝트 필터", filterAll: "전체", filterWeb: "웹", filterMobile: "모바일", filterApi: "API", filterAutomation: "자동화", filterPerformance: "성능", filterDataQuality: "데이터 품질", qualityChecked: "품질 확인", noProjectsInCategory: "이 카테고리에는 아직 사례가 없습니다.",
   qaRecordsEyebrow: "실제 QA 사례", testShowcaseTitle: "테스트 케이스", testShowcaseDescription: "업무 방식과 세부 사항에 대한 집중을 보여주는 테스트 범위입니다.", bugShowcaseTitle: "버그 보고서", bugShowcaseDescription: "팀이 쉽게 이해하고 조치할 수 있도록 명확한 맥락으로 기록합니다.", apiShowcaseTitle: "API 테스트", apiShowcaseDescription: "공개하도록 선택한 엔드포인트와 응답 검증 사례입니다.", automationShowcaseTitle: "테스트 자동화", automationShowcaseDescription: "공개하도록 선택한 자동화 프레임워크와 테스트 모음입니다.", performanceShowcaseTitle: "성능 테스트", performanceShowcaseDescription: "공개된 성능 보고서의 주요 지표입니다.", noPublicItems: "공개된 항목이 없습니다.", noPublicItemsDescription: "관리자 CMS에서 QA 항목을 선택하고 공개 표시 옵션을 켜면 여기에 표시됩니다.", testIdLabel: "ID", testScenarioLabel: "테스트 시나리오", projectLabel: "프로젝트", priorityLabel: "우선순위", statusLabel: "상태", bugReportLabel: "버그 보고서", bugEnvironmentPrivate: "환경 세부 정보는 요청 시 제공됩니다.", endpointNotShared: "엔드포인트 비공개", apiValidationPrivate: "검증 세부 정보는 요청 시 제공됩니다.", automationFramework: "자동화 프레임워크", automationSuite: "QA 자동화 테스트", viewRepository: "저장소 보기", performanceScenario: "성능 시나리오", virtualUsersLabel: "가상 사용자", responseTimeLabel: "응답 시간", throughputLabel: "처리량", errorRateLabel: "오류율",
 });
 
 Object.assign(copy.ja, {
-  projectFilters: "プロジェクトを絞り込む", filterAll: "すべて", filterWeb: "Web", filterMobile: "モバイル", filterApi: "API", filterAutomation: "自動化", filterPerformance: "パフォーマンス", qualityChecked: "品質を確認済み", noProjectsInCategory: "このカテゴリの事例はまだありません。",
+  projectFilters: "プロジェクトを絞り込む", filterAll: "すべて", filterWeb: "Web", filterMobile: "モバイル", filterApi: "API", filterAutomation: "自動化", filterPerformance: "パフォーマンス", filterDataQuality: "データ品質", qualityChecked: "品質を確認済み", noProjectsInCategory: "このカテゴリの事例はまだありません。",
   qaRecordsEyebrow: "QAの実践例", testShowcaseTitle: "テストケース", testShowcaseDescription: "仕事の進め方と細部への配慮を示すテスト範囲です。", bugShowcaseTitle: "バグレポート", bugShowcaseDescription: "チームが理解して対応しやすいよう、明確な背景とともに記録します。", apiShowcaseTitle: "APIテスト", apiShowcaseDescription: "公開対象として選択されたエンドポイントとレスポンス検証の例です。", automationShowcaseTitle: "テスト自動化", automationShowcaseDescription: "公開対象として選択された自動化フレームワークとテストスイートです。", performanceShowcaseTitle: "パフォーマンステスト", performanceShowcaseDescription: "公開されたパフォーマンスレポートの指標です。", noPublicItems: "公開項目はまだありません。", noPublicItemsDescription: "管理CMSでQA項目を選び、公開表示を有効にするとここに表示されます。", testIdLabel: "ID", testScenarioLabel: "テストシナリオ", projectLabel: "プロジェクト", priorityLabel: "優先度", statusLabel: "ステータス", bugReportLabel: "バグレポート", bugEnvironmentPrivate: "環境の詳細はお問い合わせください。", endpointNotShared: "エンドポイントは非公開です", apiValidationPrivate: "検証の詳細はお問い合わせください。", automationFramework: "自動化フレームワーク", automationSuite: "QA自動化スイート", viewRepository: "リポジトリを見る", performanceScenario: "パフォーマンスシナリオ", virtualUsersLabel: "仮想ユーザー", responseTimeLabel: "応答時間", throughputLabel: "スループット", errorRateLabel: "エラー率",
 });
 
 Object.assign(copy.zh, {
-  projectFilters: "筛选项目", filterAll: "全部", filterWeb: "网页", filterMobile: "移动端", filterApi: "API", filterAutomation: "自动化", filterPerformance: "性能", qualityChecked: "质量已验证", noProjectsInCategory: "此类别暂无案例。",
+  projectFilters: "筛选项目", filterAll: "全部", filterWeb: "网页", filterMobile: "移动端", filterApi: "API", filterAutomation: "自动化", filterPerformance: "性能", filterDataQuality: "数据质量", qualityChecked: "质量已验证", noProjectsInCategory: "此类别暂无案例。",
   qaRecordsEyebrow: "QA实践案例", testShowcaseTitle: "测试用例展示", testShowcaseDescription: "精选测试范围，展示工作方式和对细节的关注。", bugShowcaseTitle: "缺陷报告展示", bugShowcaseDescription: "以清晰背景记录问题，方便团队理解和跟进。", apiShowcaseTitle: "API测试", apiShowcaseDescription: "精选公开的端点、响应契约和验证示例。", automationShowcaseTitle: "自动化测试", automationShowcaseDescription: "精选公开展示的自动化框架和测试套件。", performanceShowcaseTitle: "性能测试", performanceShowcaseDescription: "来自已发布性能报告的指标摘要。", noPublicItems: "暂无公开内容。", noPublicItemsDescription: "在管理后台选择QA记录并开启公开展示后，内容会显示在这里。", testIdLabel: "编号", testScenarioLabel: "测试场景", projectLabel: "项目", priorityLabel: "优先级", statusLabel: "状态", bugReportLabel: "缺陷报告", bugEnvironmentPrivate: "环境详情可按需提供。", endpointNotShared: "端点未公开", apiValidationPrivate: "验证详情可按需提供。", automationFramework: "自动化框架", automationSuite: "QA自动化套件", viewRepository: "查看代码库", performanceScenario: "性能场景", virtualUsersLabel: "虚拟用户", responseTimeLabel: "响应时间", throughputLabel: "吞吐量", errorRateLabel: "错误率",
 });
 
@@ -85,6 +85,58 @@ Object.assign(copy.en, { contactFormHeading: "Send a message", contactFormDescri
 Object.assign(copy.ko, { contactFormHeading: "메시지 보내기", contactFormDescription: "이 양식은 이메일 앱을 열어 메시지를 보냅니다.", yourName: "이름", yourEmail: "이메일", yourMessage: "메시지", sendMessage: "메시지 보내기" });
 Object.assign(copy.ja, { contactFormHeading: "メッセージを送る", contactFormDescription: "このフォームからメールアプリを開いて送信します。", yourName: "お名前", yourEmail: "メールアドレス", yourMessage: "メッセージ", sendMessage: "送信する" });
 Object.assign(copy.zh, { contactFormHeading: "发送消息", contactFormDescription: "此表单会打开邮件应用来发送消息。", yourName: "姓名", yourEmail: "邮箱", yourMessage: "消息", sendMessage: "发送消息" });
+
+Object.assign(idLabels, {
+  workDescription: "Lihat bagaimana saya menerjemahkan kebutuhan menjadi cakupan tes yang terarah, temuan yang dapat ditindaklanjuti, dan dasar keputusan rilis.",
+  labDescription: "Eksplorasi pola QA yang saya gunakan untuk menguji alur pengguna, kontrak API, dan kualitas data secara terukur.",
+  labDemoLabel: "POLA PENGUJIAN",
+  labCtaEyebrow: "PRAKTIK QA",
+  viewCredential: "Lihat kredensial",
+  experiments: "Kualitas produk dimulai dari pengujian yang terarah.",
+  linkRepo: "Jelajahi GitHub saya untuk melihat proyek dan eksperimen QA lainnya.",
+});
+Object.assign(copy.en, {
+  workDescription: "See how I turn requirements into focused test coverage, actionable findings, and evidence for release decisions.",
+  labDescription: "Explore the QA patterns I use to validate user journeys, API contracts, and data quality with clear evidence.",
+  labDemoLabel: "TEST PATTERN",
+  labCtaEyebrow: "QA PRACTICE",
+  viewCredential: "View credential",
+  experiments: "Product quality starts with focused testing.",
+  linkRepo: "Explore my GitHub for more QA projects and experiments.",
+});
+Object.assign(copy.ko, {
+  workDescription: "요구사항을 집중도 높은 테스트 범위와 실행 가능한 발견 사항, 릴리스 판단 근거로 발전시키는 과정을 확인하세요.",
+  labDescription: "사용자 흐름, API 계약, 데이터 품질을 명확한 근거와 함께 검증하는 QA 패턴을 확인하세요.",
+  labDemoLabel: "테스트 패턴",
+  labCtaEyebrow: "QA 실무",
+  viewCredential: "자격 증명 보기",
+  experiments: "제품 품질은 집중도 높은 테스트에서 시작됩니다.",
+  linkRepo: "GitHub에서 더 많은 QA 프로젝트와 실험을 확인해 보세요.",
+});
+Object.assign(copy.ja, {
+  workDescription: "要件を的確なテスト範囲、対応可能な発見事項、リリース判断の根拠へつなげる方法をご覧ください。",
+  labDescription: "ユーザー操作、API契約、データ品質を明確な根拠とともに検証するQAパターンをご覧ください。",
+  labDemoLabel: "テストパターン",
+  labCtaEyebrow: "QAの実践",
+  viewCredential: "資格情報を見る",
+  experiments: "製品の品質は、的を絞ったテストから始まります。",
+  linkRepo: "GitHubでQAプロジェクトや実験をご覧ください。",
+});
+Object.assign(copy.zh, {
+  workDescription: "了解我如何将需求转化为有针对性的测试覆盖、可执行的问题发现和发布决策依据。",
+  labDescription: "了解我如何通过清晰的依据验证用户流程、API 契约和数据质量。",
+  labDemoLabel: "测试模式",
+  labCtaEyebrow: "QA 实践",
+  viewCredential: "查看凭证",
+  experiments: "产品质量始于有针对性的测试。",
+  linkRepo: "欢迎在 GitHub 查看更多 QA 项目和实验。",
+});
+
+Object.assign(idLabels, { idCardHintTitle: "↕ Tarik ke bawah · Geser ke samping", idCardHintBody: "Lepaskan talinya untuk melihat ID card memantul" });
+Object.assign(copy.en, { idCardHintTitle: "↕ Pull down · Swipe sideways", idCardHintBody: "Release the strap to see the ID card bounce" });
+Object.assign(copy.ko, { idCardHintTitle: "↕ 아래로 당기기 · 좌우로 밀기", idCardHintBody: "끈을 놓으면 ID 카드가 튕깁니다" });
+Object.assign(copy.ja, { idCardHintTitle: "↕ 下に引く · 横にスワイプ", idCardHintBody: "ストラップを離すとIDカードが跳ねます" });
+Object.assign(copy.zh, { idCardHintTitle: "↕ 向下拖动 · 左右滑动", idCardHintBody: "松开挂绳，查看证件卡弹跳效果" });
 
 export function translateText(language: Language, text: string): string {
   if (language === "id") return text;

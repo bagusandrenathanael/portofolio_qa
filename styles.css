@@ -93,13 +93,13 @@ body.dark .profile-card-fallback .profile-card-html{background:var(--surface);bo
 .tools-marquee-track { display: flex; width: max-content; transform: translate3d(0, 0, 0); will-change: transform; }
 .tools-marquee-group { display: flex; flex: none; align-items: center; gap: 26px; padding-right: 26px; }
 .tools-marquee-item { display: inline-flex; flex: none; align-items: center; gap: 7px; color: #526077; font-size: 10px; font-weight: 700; white-space: nowrap; }
-.tools-marquee-icon { display: grid; width: 23px; height: 23px; place-items: center; border: 1px solid color-mix(in srgb, var(--tool-color) 18%, white); border-radius: 7px; color: white; background: var(--tool-color); font: 800 9px/1 Arial, sans-serif; letter-spacing: -.4px; }
+.tools-marquee-icon { display: grid; width: 27px; height: 27px; flex: none; place-items: center; color: #315990; }
 @media (max-width: 740px) {
   .tools-marquee-section { grid-template-columns: 1fr; gap: 7px; padding-top: 5px; }
   .tools-marquee-heading { text-align: center; }
   .tools-marquee-group { gap: 18px; padding-right: 18px; }
   .tools-marquee-item { gap: 6px; font-size: 9px; }
-  .tools-marquee-icon { width: 21px; height: 21px; font-size: 8px; }
+  .tools-marquee-icon { width: 24px; height: 24px; }
 }
 
 /* Consistent page gutters and compact hero-to-content spacing across desktop and mobile. */

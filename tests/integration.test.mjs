@@ -69,8 +69,9 @@ after(async () => {
 });
 
 test("migrations can be rerun without losing data", async () => {
+  const migrationCount = Number((await db.execute("SELECT count(*) AS n FROM _portfolio_migrations")).rows[0].n);
   await applyMigrations(db, resolve("prisma/migrations"));
-  assert.equal((await db.execute("SELECT count(*) AS n FROM _portfolio_migrations")).rows[0].n, 1);
+  assert.equal(Number((await db.execute("SELECT count(*) AS n FROM _portfolio_migrations")).rows[0].n), migrationCount);
 });
 test("failed migration rolls back tables and migration record", async () => {
   const migrations = join(directory, "broken-migrations");
@@ -102,7 +103,7 @@ test("language preference changes the rendered copy and document language", asyn
     const response = await request("/", { session: `site-language=${language}` });
     assert.equal(response.status, 200);
     const html = await response.text();
-    assert.ok(html.includes(`<html lang="${htmlLanguage}">`), `document language for ${language}`);
+    assert.match(html, new RegExp(`<html lang="${htmlLanguage}"(?:\\s|>)`), `document language for ${language}`);
     assert.ok(html.includes(translatedText), `translated text for ${language}`);
     assert.ok(html.includes("mobile-tab-bar"), "mobile navigation renders");
     assert.ok(html.includes(tabLabel), `mobile tab translation for ${language}`);
@@ -120,7 +121,9 @@ test("malformed, oversized, and incorrect logins are rejected", async () => {
 });
 test("valid login issues protected cookie and loads editor", async () => {
   await login();
-  assert.match(await (await request("/admin")).text(), /Editor konten/);
+  assert.match(await (await request("/admin")).text(), /Dashboard/);
+  assert.match(await (await request("/admin/content?section=labs")).text(), /Editor konten/);
+  assert.match(await (await request("/admin/content?section=labs")).text(), /Lab otomasi/);
 });
 test("save persists JSON through Prisma and public page reload", async () => {
   document.profile.name = "Integration Portfolio";
@@ -132,7 +135,7 @@ test("save persists JSON through Prisma and public page reload", async () => {
 });
 test("invalid content and oversized save cannot replace stored content", async () => {
   assert.equal((await request("/api/admin/content", { method: "PUT", body: { ...document, profile: { ...document.profile, email: "bad" } } })).status, 400);
-  assert.equal((await request("/api/admin/content", { method: "PUT", body: "x".repeat(1_000_001) })).status, 413);
+  assert.equal((await request("/api/admin/content", { method: "PUT", body: "x".repeat(2_000_001) })).status, 413);
   assert.equal((await (await request("/api/content")).json()).profile.name, document.profile.name);
 });
 test("chunked oversized request is rejected without Content-Length", async () => {
@@ -140,7 +143,7 @@ test("chunked oversized request is rejected without Content-Length", async () =>
     method: "PUT", duplex: "half", signal: AbortSignal.timeout(10000),
     headers: { Origin: origin, Cookie: cookie, "Content-Type": "application/json" },
     body: new ReadableStream({ start(controller) {
-      controller.enqueue(new TextEncoder().encode('"' + "x".repeat(1_000_001) + '"'));
+      controller.enqueue(new TextEncoder().encode('"' + "x".repeat(2_000_001) + '"'));
       controller.close();
     } }),
   });
@@ -148,7 +151,8 @@ test("chunked oversized request is rejected without Content-Length", async () =>
 });
 test("corrupt stored content disables editor instead of exposing fallback for save", async () => {
   await db.execute("UPDATE portfolio_content SET document = '{}' WHERE id = 'main'");
-  assert.match(await (await request("/admin")).text(), /Konten belum dapat dimuat/);
+  assert.equal((await request("/admin")).status, 200, "the QA dashboard remains available");
+  assert.match(await (await request("/admin/content?section=labs")).text(), /Konten belum dapat dimuat/);
   await db.execute({ sql: "UPDATE portfolio_content SET document = ? WHERE id = 'main'", args: [JSON.stringify(document)] });
 });
 test("forged session cannot save", async () => {

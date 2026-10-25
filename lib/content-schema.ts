@@ -17,7 +17,7 @@ export const portfolioContentSchema = z.object({
   }),
   education: z.array(z.object({ institution: shortText, degree: shortText, period: shortText, description: shortText, logo: z.string().max(850_000).default("") })).max(50).default([]),
   skills: z.array(z.object({ title: shortText, category: shortText, description: shortText, items: listOfText })).max(50),
-  projects: z.array(z.object({ title: shortText, category: shortText, isPublished: z.boolean().default(true), tools: listOfText, description: shortText, context: shortText, strategy: shortText, result: shortText })).max(100),
+  projects: z.array(z.object({ title: shortText, titleEn: shortText.optional(), category: shortText, categoryEn: shortText.optional(), isPublished: z.boolean().default(true), tools: listOfText, thumbnail: z.string().max(850_000).optional(), gallery: listOfText.optional(), summary: shortText.optional(), summaryEn: shortText.optional(), description: shortText, descriptionEn: shortText.optional(), context: shortText, contextEn: shortText.optional(), strategy: shortText, strategyEn: shortText.optional(), result: shortText, resultEn: shortText.optional() })).max(100),
   labs: z.array(z.object({ title: shortText, description: shortText, tool: shortText, example: shortText, url: z.string().max(500) })).max(50),
   certifications: z.array(z.object({ title: shortText, issuer: shortText, year: shortText, url: z.string().max(500) })).max(100),
   posts: z.array(z.object({ title: shortText, category: shortText, readTime: shortText, description: shortText, isPublished: z.boolean().default(true) })).max(100),

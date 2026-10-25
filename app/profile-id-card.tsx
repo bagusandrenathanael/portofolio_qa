@@ -3,13 +3,13 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-type ProfileIdCardProps = { name: string; role: string; photoUrl: string };
+type ProfileIdCardProps = { name: string; role: string; location: string; openToWork: boolean; openLabel: string; photoUrl: string; hintTitle: string; hintBody: string };
 
 function initials(name: string) {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "QA";
 }
 
-function drawTexture(canvas: HTMLCanvasElement, name: string, role: string, photoUrl: string, texture: THREE.CanvasTexture) {
+function drawTexture(canvas: HTMLCanvasElement, name: string, role: string, location: string, openToWork: boolean, openLabel: string, photoUrl: string, texture: THREE.CanvasTexture) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   const width = canvas.width;
@@ -62,6 +62,32 @@ function drawTexture(canvas: HTMLCanvasElement, name: string, role: string, phot
   }
   if (roleLine) ctx.fillText(roleLine, 78, roleY);
 
+  if (location) {
+    const locationY = Math.max(680, roleY + 72);
+    ctx.save();
+    ctx.translate(88, locationY - 8);
+    ctx.strokeStyle = "#54709b"; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0, -5, 12, Math.PI * .18, Math.PI * .82); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-9, 3); ctx.lineTo(0, 17); ctx.lineTo(9, 3); ctx.stroke();
+    ctx.fillStyle = "#54709b"; ctx.beginPath(); ctx.arc(0, -5, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    ctx.textAlign = "left"; ctx.fillStyle = "#526781"; ctx.font = "600 22px Arial, sans-serif";
+    const words = location.split(/\s+/); let line = "", lineY = locationY;
+    for (const word of words) {
+      const next = line ? `${line} ${word}` : word;
+      if (line && ctx.measureText(next).width > 350) { ctx.fillText(line, 118, lineY); line = word; lineY += 30; }
+      else line = next;
+    }
+    if (line) ctx.fillText(line, 118, lineY);
+  }
+
+  if (openToWork) {
+    const badgeY = 940;
+    ctx.fillStyle = "#e9f8ef"; ctx.beginPath(); ctx.roundRect(76, badgeY, 360, 48, 24); ctx.fill();
+    ctx.fillStyle = "#20a86b"; ctx.beginPath(); ctx.arc(101, badgeY + 24, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#13754b"; ctx.font = "700 18px Arial, sans-serif"; ctx.textAlign = "left";
+    ctx.fillText(openLabel.toUpperCase(), 120, badgeY + 30, 300);
+  }
+
   ctx.fillStyle = "#8390a0"; ctx.font = "700 20px Arial, sans-serif"; ctx.fillText("MEMBER SINCE", 78, 780);
   ctx.fillStyle = "#33445a"; ctx.font = "italic 42px Georgia, serif"; ctx.fillText(String(new Date().getFullYear()), 78, 838);
   ctx.fillStyle = "#294c8a"; ctx.beginPath(); ctx.ellipse(692, 835, 92, 49, -.12, 0, Math.PI * 2); ctx.fill();
@@ -81,7 +107,7 @@ function drawTexture(canvas: HTMLCanvasElement, name: string, role: string, phot
   }
 }
 
-export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardProps) {
+export default function ProfileIdCard({ name, role, location, openToWork, openLabel, photoUrl, hintTitle, hintBody }: ProfileIdCardProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const rotationRef = useRef({ x: 0.04, y: -0.08 });
   const dragRef = useRef<{ x: number; y: number; startX: number; startY: number; startOffsetY: number } | null>(null);
@@ -105,7 +131,7 @@ export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardPro
     const cardRig = new THREE.Group();
     scene.add(cardRig);
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-    camera.position.z = window.innerWidth < 740 ? 11 : 11.5;
+    camera.position.z = window.innerWidth < 740 ? 8.8 : 9.8;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -117,7 +143,7 @@ export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardPro
     canvas.height = 1400;
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
-    const cancelPhoto = drawTexture(canvas, name, role, photoUrl, texture);
+    const cancelPhoto = drawTexture(canvas, name, role, location, openToWork, openLabel, photoUrl, texture);
 
     const width = 2.82;
     const height = width * (1400 / 900);
@@ -191,7 +217,7 @@ export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardPro
       const h = Math.max(1, bounds.height);
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
-      camera.position.z = window.innerWidth < 740 ? 11 : 11.5;
+      camera.position.z = window.innerWidth < 740 ? 8.8 : 9.8;
       camera.updateProjectionMatrix();
     };
     const observer = new ResizeObserver(resize);
@@ -249,7 +275,7 @@ export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardPro
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [name, role, photoUrl]);
+  }, [name, role, location, openToWork, openLabel, photoUrl]);
 
   function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
     springVelocityRef.current = 0;
@@ -275,13 +301,13 @@ export default function ProfileIdCard({ name, role, photoUrl }: ProfileIdCardPro
     mountRef.current?.closest(".hero-city")?.classList.remove("profile-card-dragging");
   }
 
-  return <div className="profile-id-card-wrap"><div ref={mountRef} className="profile-id-card-stage" role="img" aria-label={`Kartu profil 3D ${name}, ${role}. Seret untuk memutar kartu.`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} tabIndex={0} onKeyDown={(event) => {
+  return <div className="profile-id-card-wrap"><div ref={mountRef} className="profile-id-card-stage" role="img" aria-label={`Kartu profil 3D ${name}, ${role}${location ? `, ${location}` : ""}${openToWork ? `, ${openLabel}` : ""}. Seret untuk memutar kartu.`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} tabIndex={0} onKeyDown={(event) => {
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) event.preventDefault();
     if (event.key === "ArrowLeft") rotationRef.current = { ...rotationRef.current, y: Math.max(-2.7, rotationRef.current.y - 0.12) };
     if (event.key === "ArrowRight") rotationRef.current = { ...rotationRef.current, y: Math.min(2.7, rotationRef.current.y + 0.12) };
     if (event.key === "ArrowUp") rotationRef.current = { ...rotationRef.current, x: Math.max(-0.45, rotationRef.current.x - 0.12) };
     if (event.key === "ArrowDown") rotationRef.current = { ...rotationRef.current, x: Math.min(0.45, rotationRef.current.x + 0.12) };
-  }} onLostPointerCapture={onPointerUp}><div className="profile-card-html"><div className="profile-card-avatar">{photoUrl ? <img src={photoUrl} alt="" /> : <span>{initials(name)}</span>}</div><div><small>QUALITY ENGINEER</small><b>{name}</b><span>{role}</span></div></div></div><p className="profile-card-hint"><b>↕ Tarik ke bawah · Geser ke samping</b><span>Lepaskan talinya untuk melihat ID card memantul</span></p></div>;
+  }} onLostPointerCapture={onPointerUp}><div className="profile-card-html"><div className="profile-card-avatar">{photoUrl ? <img src={photoUrl} alt="" /> : <span>{initials(name)}</span>}</div><div><small>QUALITY ENGINEER</small><b>{name}</b><span>{role}</span></div></div></div><p className="profile-card-hint"><b>{hintTitle}</b><span>{hintBody}</span></p></div>;
 }
 
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" role="img" aria-label="IDEACO">
+  <rect width="280" height="100" rx="16" fill="#fff"/>
+  <path d="M18 70V30h12v40z" fill="#0b4fa3"/>
+  <path d="M39 70V30h28c14 0 23 8 23 20S81 70 67 70zm12-10h15c7 0 12-4 12-10s-5-10-12-10H51z" fill="#0b4fa3"/>
+  <text x="99" y="67" fill="#0b4fa3" font-family="Arial, sans-serif" font-size="43" font-weight="700" letter-spacing="-2">IDEACO</text>
+</svg>

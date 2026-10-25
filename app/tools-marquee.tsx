@@ -2,17 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { type Language, t } from "../lib/i18n";
+import ToolIcon from "./tool-icon";
 
 const items = [
-  ["Jenkins", "J", "#d24939"], ["Katalon", "K", "#1769ff"], ["Selenium", "Se", "#43b02a"],
-  ["Playwright", "Pw", "#2ead6e"], ["TypeScript", "TS", "#3178c6"], ["JavaScript", "JS", "#d7bd00"],
-  ["Java", "♨", "#007396"], ["Postman", "P", "#ff6c37"], ["Swagger", "Sw", "#62a626"],
-  ["Bruno", "B", "#f16a37"], ["k6", "k6", "#7d64ff"], ["JMeter", "JM", "#d22128"],
-  ["VS Code", "</>", "#007acc"], ["Microsoft Office", "O", "#d83b01"], ["SQL", "DB", "#294c8a"],
-  ["QA Methods", "QA", "#294c8a"], ["Waterfall", "WF", "#6d798d"], ["Agile", "Ag", "#178e78"],
-  ["SDLC", "SD", "#6954aa"], ["Manual Testing", "MT", "#4383bb"], ["Automation Testing", "AT", "#2e9c72"],
-  ["API Testing", "API", "#e87936"], ["Performance Testing", "PT", "#7b62c7"], ["Regression Testing", "RT", "#c85b6d"],
-  ["Risk-based Testing", "RB", "#ad7b27"], ["Shift-left Testing", "SL", "#33799c"],
+  "Jenkins", "Katalon", "Selenium", "Playwright", "TypeScript", "JavaScript",
+  "Java", "Postman", "Swagger", "Bruno", "k6", "JMeter", "VS Code",
+  "Microsoft Office", "SQL", "QA Methods", "Waterfall", "Agile", "SDLC",
+  "Manual Testing", "Automation Testing", "API Testing", "Performance Testing",
+  "Regression Testing", "Risk-based Testing", "Shift-left Testing",
 ] as const;
 
 type DragState = { pointerX: number; startOffset: number };
@@ -88,9 +85,9 @@ export default function ToolsMarquee({ language }: { language: Language }) {
 
   const renderItems = (copy: number) => (
     <div className="tools-marquee-group" key={copy} aria-hidden={copy === 1}>
-      {items.map(([label, icon, color]) => (
+      {items.map((label) => (
         <span className="tools-marquee-item" key={label}>
-          <span className="tools-marquee-icon" style={{ "--tool-color": color } as React.CSSProperties}>{icon}</span>
+          <span className="tools-marquee-icon"><ToolIcon name={label} size={24} /></span>
           <span>{label}</span>
         </span>
       ))}

@@ -9,7 +9,12 @@ import { getPortfolioContent } from "../lib/portfolio-store";
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPortfolioContent();
   const settings = content.siteSettings;
-  const favicon = /^(https:\/\/|\/)/i.test(settings.favicon) ? settings.favicon : "/andre-favicon.svg";
+  // The custom portfolio favicon is committed under /public and shipped with every deployment.
+  // Older CMS records may still point at /favicon.ico, which is not present in this project.
+  const configuredFavicon = settings.favicon.trim();
+  const favicon = /^(https:\/\/|\/)/i.test(configuredFavicon) && configuredFavicon !== "/favicon.ico"
+    ? configuredFavicon
+    : "/favicon.svg";
   return {
     title: settings.seoTitle || content.profile.seoTitle || settings.siteTitle || "Andre Nathanael — QA Engineer",
     description: settings.seoDescription || content.profile.seoDescription || "Portofolio QA Engineer yang menguji produk dengan strategi dan otomasi.",

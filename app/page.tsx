@@ -33,6 +33,10 @@ export default async function Home() {
   const content = translateContent(language, savedContent);
   const tr = (key: string) => t(language, key);
   const p = content.profile;
+  const savedProfilePhoto = safeBrandImage(p.photoUrl);
+  const profilePhoto = savedProfilePhoto && !/^\/(?:andre-avatar(?:-manga)?\.(?:png|jpe?g)|andre-favicon\.svg)$/i.test(savedProfilePhoto)
+    ? savedProfilePhoto
+    : "/andre-id-photo.png";
   const skillTitles = new Map(records.filter((record) => record.module === "skill").map((record) => [record.id, record.title]));
   const structuredProjects = records.filter((record) => record.module === "project").map(({ title, data, skillIds }) => ({ title: language === "en" ? value(data, "titleEn") || title : title, category: (language === "en" ? value(data, "categoryEn") : "") || value(data, "category") || "QA Project", isPublished: true, tools: list(data, "tags"), description: preview((language === "en" ? value(data, "summaryEn") || value(data, "descriptionEn") : "") || value(data, "summary") || value(data, "description")), context: (language === "en" ? value(data, "contextEn") : "") || value(data, "context") || value(data, "description"), strategy: (language === "en" ? value(data, "strategyEn") : "") || value(data, "strategy"), result: (language === "en" ? value(data, "resultEn") : "") || value(data, "result"), slug: value(data, "slug"), thumbnail: value(data, "thumbnail"), gallery: list(data, "gallery"), demoUrl: value(data, "demoUrl"), repoUrl: value(data, "repoUrl"), featured: data.featured === true, sortOrder: order(data), skillNames: skillIds.flatMap((id) => skillTitles.has(id) ? [skillTitles.get(id)!] : []) }));
   const fallbackProjects = content.projects.filter((project) => project.isPublished).map((project) => ({ ...project, title: language === "en" ? project.titleEn || project.title : project.title, category: (language === "en" ? project.categoryEn : "") || project.category, description: preview((language === "en" ? project.summaryEn || project.descriptionEn : "") || project.summary || project.description), context: (language === "en" ? project.contextEn : "") || project.context, strategy: (language === "en" ? project.strategyEn : "") || project.strategy, result: (language === "en" ? project.resultEn : "") || project.result }));
@@ -64,11 +68,11 @@ export default async function Home() {
   const evidenceRecords = records.filter((record) => record.module === "evidence").map(({ id, title, data, projectIds }) => ({ id, title, before: value(data, "before"), after: value(data, "after"), notes: value(data, "notes"), projects: projectIds.flatMap((projectId) => projectTitles.has(projectId) ? [projectTitles.get(projectId)!] : []), sortOrder: order(data) })).sort((a, b) => a.sortOrder - b.sortOrder);
   return (
     <>
-      <PortfolioHeader language={language} email={p.email} linkedin={p.linkedin} whatsapp={p.whatsapp} cvUrl={p.cvUrl ? safeCvLink(p.cvUrl) : undefined} navigation={content.navigation} brandName={content.siteSettings.siteTitle.split(/[—|]/)[0].trim() || "Andre"} brandLogo={safeBrandImage(content.siteSettings.logo) || "/andre-avatar-manga.jpg"} photoUrl={p.photoUrl || "/andre-avatar.png"} />
+      <PortfolioHeader language={language} email={p.email} linkedin={p.linkedin} whatsapp={p.whatsapp} cvUrl={p.cvUrl ? safeCvLink(p.cvUrl) : undefined} navigation={content.navigation} brandName={content.siteSettings.siteTitle.split(/[—|]/)[0].trim() || "Andre"} brandLogo={profilePhoto} photoUrl={profilePhoto} />
       <main>
         <section className="hero hero-city" id="home">
           <div className="hero-copy"><p className="eyebrow">● {p.role}</p>{p.location && <p className="hero-location"><MapPin size={15} strokeWidth={2}/><span>{p.location}</span></p>}<h1>{p.name.split(" ").slice(0, -1).join(" ")}<br /><span>{p.name.split(" ").slice(-1)}</span></h1><p className="lead">{p.headline}</p><p className="muted">{p.summary}</p><div className="actions"><a className="button" href="#work">{tr('seeCases')} →</a></div><div className="social"><a href={safeLink(p.github)} aria-label="GitHub">GH</a><a href={safeLink(p.linkedin)} aria-label="LinkedIn">in</a><a href={`mailto:${p.email}`} aria-label="Email">✉</a></div></div>
-          <ProfileIdCard name={p.name} role={p.role} location={p.location} openToWork={p.openToWork} openLabel={tr('openForWork')} photoUrl={p.photoUrl || "/andre-id-photo.png"} hintTitle={tr('idCardHintTitle')} hintBody={tr('idCardHintBody')} />
+          <ProfileIdCard name={p.name} role={p.role} location={p.location} openToWork={p.openToWork} openLabel={tr('openForWork')} photoUrl={profilePhoto} hintTitle={tr('idCardHintTitle')} hintBody={tr('idCardHintBody')} />
           <div className="metrics"><div><i className="metric-icon"><Users size={23}/></i><b>{p.experienceYears}<span>+</span></b><small>{tr('years')}</small></div><div><i className="metric-icon"><FolderOpen size={23}/></i><b>{p.projectsSupported}<span>+</span></b><small>{tr('projectsCount')}</small></div><div><i className="metric-icon"><ClipboardCheck size={23}/></i><b>{p.testCasesCreated}<span>+</span></b><small>{tr('casesCount')}</small></div><div><i className="metric-icon"><Bug size={23}/></i><b>360°</b><small>{tr('everyStep')}</small></div></div>
           <ToolsMarquee language={language} />
         </section>
@@ -89,10 +93,10 @@ export default async function Home() {
 
         <section className="section wrap" id="credentials"><div className="section-title"><div><p className="eyebrow">{tr('learning')}</p><h2>{tr('certifications')} <span>{tr('certificationSpan')}</span></h2></div><small className="index">09 — CREDENTIALS</small></div><CredentialsShowcase items={publicCertifications} language={language}/></section>
 
-        <section className="section wrap" id="notes"><div className="section-title"><div><p className="eyebrow">{tr('notesEyebrow')}</p><h2>{tr('notesTitle')} <span>{tr('notesSpan')}</span></h2></div><small className="index">10 — NOTES</small></div><BlogShowcase posts={publicPosts} language={language} author={p.name} avatar={safeBrandImage(p.photoUrl) || "/andre-avatar.png"}/></section>
+        <section className="section wrap" id="notes"><div className="section-title"><div><p className="eyebrow">{tr('notesEyebrow')}</p><h2>{tr('notesTitle')} <span>{tr('notesSpan')}</span></h2></div><small className="index">10 — NOTES</small></div><BlogShowcase posts={publicPosts} language={language} author={p.name} avatar={profilePhoto}/></section>
 
       </main>
-      <footer className="footer"><a className="brand" href="#home"><img className="brand-avatar" src={safeBrandImage(content.siteSettings.logo) || "/andre-avatar.png"} alt="" aria-hidden="true" />{content.siteSettings.siteTitle.split(/[—|]/)[0].trim() || "Andre"}<span>.</span></a><p>{tr('footer')}</p><small>© {new Date().getFullYear()} {p.name}</small><a href="#home">{tr('backTop')} ↑</a><a href="/admin">{tr('manage')}</a></footer>
+      <footer className="footer"><a className="brand" href="#home"><img className="brand-avatar" src={profilePhoto} alt="" aria-hidden="true" />{content.siteSettings.siteTitle.split(/[—|]/)[0].trim() || "Andre"}<span>.</span></a><p>{tr('footer')}</p><small>© {new Date().getFullYear()} {p.name}</small><a href="#home">{tr('backTop')} ↑</a><a href="/admin">{tr('manage')}</a></footer>
       <MobileTabBar language={language} navigation={content.navigation} />
     </>
   );

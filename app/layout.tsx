@@ -9,16 +9,17 @@ import { getPortfolioContent } from "../lib/portfolio-store";
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPortfolioContent();
   const settings = content.siteSettings;
-  // The custom portfolio favicon is committed under /public and shipped with every deployment.
-  // Older CMS records may still point at /favicon.ico, which is not present in this project.
-  const configuredFavicon = settings.favicon.trim();
-  const favicon = /^(https:\/\/|\/)/i.test(configuredFavicon) && configuredFavicon !== "/favicon.ico"
-    ? configuredFavicon
-    : "/favicon.svg";
+  // Keep the browser tab portrait consistent with the public profile photo.
+  // Older CMS records may still point at illustrative avatars or the old logo favicon.
+  const configuredPhoto = content.profile.photoUrl.trim();
+  const isIllustration = /^\/(?:andre-avatar(?:-manga)?\.(?:png|jpe?g)|andre-favicon\.svg|favicon\.svg)$/i.test(configuredPhoto);
+  const favicon = /^(https:\/\/|\/(?!\/)|data:image\/(?:png|jpeg|webp);base64,)/i.test(configuredPhoto) && !isIllustration
+    ? configuredPhoto
+    : "/andre-id-photo.png";
   return {
     title: settings.seoTitle || content.profile.seoTitle || settings.siteTitle || "Andre Nathanael — QA Engineer",
     description: settings.seoDescription || content.profile.seoDescription || "Portofolio QA Engineer yang menguji produk dengan strategi dan otomasi.",
-    icons: { icon: favicon, shortcut: favicon },
+    icons: { icon: favicon, shortcut: favicon, apple: favicon },
   };
 }
 

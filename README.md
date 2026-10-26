@@ -69,11 +69,37 @@ Variabel Supabase lama, `DATABASE_URL`, `DIRECT_URL`, dan `ADMIN_EMAILS` tidak d
 
 ## Vercel
 
-1. Hubungkan repository GitHub ke Vercel.
-2. Isi lima variabel di atas pada environment deployment. Salin hash dari `.env` melalui editor lokal, bukan password asli. Jangan commit `.env`.
-3. Jalankan `npm run db:deploy` dari komputer dengan konfigurasi database tujuan sebelum deploy aplikasi. Build tidak menjalankan migrasi.
-4. Gunakan build command `npm run build`. Prisma Client dibuat saat instalasi.
-5. Login melalui HTTPS setelah deployment. Perubahan variabel Vercel memerlukan redeploy. SQLite lokal tidak digunakan sebagai penyimpanan aplikasi di Vercel.
+### Deploy otomatis lewat GitHub
+
+Hubungkan repository GitHub ini ke proyek Vercel dan atur **Production Branch** ke `main`. Setelah itu, setiap push ke `main` akan memicu production deployment:
+
+```bash
+git add README.md
+git commit -m "Document Vercel deployment commands"
+git push origin main
+```
+
+Ganti nama file dan pesan commit sesuai perubahan yang dibuat. Pantau prosesnya pada **Vercel → Project → Deployments**.
+
+### Deploy manual lewat Vercel CLI
+
+Instal dan hubungkan proyek satu kali. Jalankan dari folder proyek; `vercel link` akan meminta pemilihan akun dan proyek:
+
+```bash
+npm install --global vercel
+vercel login
+vercel link
+```
+
+Untuk membuat production deployment berikutnya:
+
+```bash
+vercel --prod
+```
+
+Pastikan variabel lingkungan di bagian sebelumnya sudah diisi pada **Vercel → Project → Settings → Environment Variables**. Jika ada migrasi database baru, jalankan `npm run db:deploy` dengan konfigurasi database tujuan sebelum deploy aplikasi. Build command adalah `npm run build`; Prisma Client dibuat saat instalasi. Jangan commit `.env` atau token rahasia.
+
+Login melalui HTTPS setelah deployment. Perubahan variabel Vercel memerlukan redeploy. SQLite lokal tidak digunakan sebagai penyimpanan aplikasi di Vercel.
 
 Halaman publik menampilkan konten bawaan ketika database belum tersedia. Editor memerlukan koneksi database yang berhasil. Setup kode tidak membuat akun/database Turso atau memindahkan data PostgreSQL secara otomatis.
 
